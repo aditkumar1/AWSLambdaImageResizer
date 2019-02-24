@@ -1,0 +1,29 @@
+group 'com.awslearning'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile (
+            'com.amazonaws:aws-lambda-java-core:1.1.0',
+            'com.amazonaws:aws-lambda-java-events:1.1.0',
+            'org.imgscalr:imgscalr-lib:4.2',
+            'com.google.code.gson:gson:2.7',
+            'com.amazonaws:aws-java-sdk-s3:1.11.505',
+            'commons-io:commons-io:2.6'
+    )
+}
+
+task buildZip(type: Zip) {
+    from compileJava
+    from processResources
+    into('lib') {
+        from configurations.compileClasspath
+    }
+}
+
+build.dependsOn buildZip
